@@ -3,7 +3,7 @@ import AuthUtils from '@utils/AuthUtils';
 import UserService from '@services/UserService';
 
 export default class AuthController {
-  private userService: UserService;
+  private readonly userService: UserService;
 
   constructor() {
     this.userService = new UserService();

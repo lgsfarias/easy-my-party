@@ -16,7 +16,7 @@ export default class UserRepository {
     });
   }
 
-  async findOne(id: number): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: {
         id,
@@ -24,7 +24,7 @@ export default class UserRepository {
     });
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: {
         email,

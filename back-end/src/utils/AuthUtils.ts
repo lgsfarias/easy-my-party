@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 export default class AuthUtils {
   static encryptPassword(password: string) {
-    const cost = +process.env.HASH_COST;
+    const cost = Number(process.env.HASH_COST);
     const hashedPassword = bcrypt.hashSync(password, cost);
     return hashedPassword;
   }
@@ -13,7 +13,8 @@ export default class AuthUtils {
   }
 
   static generateToken(id: number) {
-    const token = jwt.sign({ userId: id }, process.env.JWT_SECRET, {
+    const secret = String(process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: id }, secret, {
       expiresIn: '1h',
     });
     return token;

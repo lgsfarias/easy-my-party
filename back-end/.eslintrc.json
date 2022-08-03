@@ -35,7 +35,9 @@
         "no-console": "off",
         "no-useless-escape": "off",
         "no-plusplus": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "function-paren-newline": "off",
+        "implicit-arrow-linebreak": "off"
     },
     "settings": {
         "import/resolver": {
