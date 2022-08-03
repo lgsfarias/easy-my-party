@@ -15,7 +15,7 @@ model User {
   name      String
   email     String   @unique
   password  String
-  createdAt DateTime @default(now()) @db.Timestamptz()
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("users")
 }
