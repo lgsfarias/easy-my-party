@@ -1,5 +1,7 @@
+import AppRoutes from "./Routes"
+
 function App() {
-  return <h1>Easy My Party</h1>
+  return <AppRoutes/>
 } 
 
 export default App
