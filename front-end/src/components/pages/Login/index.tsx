@@ -1,15 +1,30 @@
-import Button from '../../../styles/elements/button';
-import Form from '../../../styles/elements/form';
-import Input from '../../../styles/elements/input';
-import Wrapper from '../../../styles/elements/wrapper';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useNavigate } from 'react-router-dom';
+import * as S from './style';
 
 export default function Login() {
+  const navigate = useNavigate();
   return (
-    <Wrapper>
-      <Form>
-        <Input placeholder="teste" />
-        <Button>Login</Button>
-      </Form>
-    </Wrapper>
+    <S.LoginWrapper>
+      <S.Title>Easy My Party</S.Title>
+      <S.Form>
+        <S.Input
+          type="email"
+          placeholder="e-mail"
+        />
+        <S.Input
+          type="password"
+          placeholder="senha"
+        />
+        <S.Button>Login</S.Button>
+        <h2
+          className="link"
+          onClick={() => navigate('/signup')}
+        >
+          Primeira vez? Cadastre-se!
+        </h2>
+      </S.Form>
+    </S.LoginWrapper>
   );
 }
