@@ -6,12 +6,14 @@ import { AxiosError } from 'axios';
 import * as S from './style';
 import api from '../../services/api';
 import useAlert from '../../hooks/useAlert';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setMessage } = useAlert();
+  const { login } = useAuth();
 
   async function handleSubmit(e : React.FormEvent) {
     e.preventDefault();
@@ -23,10 +25,14 @@ export default function Login() {
     }
 
     try {
-      await api.post('/login', {
+      const {
+        data: { token },
+      } = await api.post('/login', {
         email,
         password,
       });
+      console.log(token);
+      login(token);
       navigate('/home');
     } catch (error: Error | AxiosError | any) {
       if (error.response) {
