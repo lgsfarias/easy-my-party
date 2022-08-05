@@ -11,8 +11,13 @@ export default class PartyRepository {
   }
 
   async create(data: CreatePartyData): Promise<Party> {
+    const { date } = data;
+    const dateTime = new Date(date);
     return this.prisma.party.create({
-      data,
+      data: {
+        ...data,
+        date: dateTime,
+      },
     });
   }
 
