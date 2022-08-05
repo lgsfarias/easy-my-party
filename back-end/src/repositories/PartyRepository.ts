@@ -25,10 +25,14 @@ export default class PartyRepository {
   }
 
   async findAll(): Promise<Party[]> {
-    return this.prisma.party.findMany();
+    return this.prisma.party.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
-  async update(id: number, data: Partial<Party>): Promise<Party> {
+  async update(id: number, data: Partial<CreatePartyData>): Promise<Party> {
     return this.prisma.party.update({
       where: {
         id,
