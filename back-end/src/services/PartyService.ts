@@ -14,8 +14,8 @@ export default class PartyService {
     return party;
   }
 
-  async findAll() {
-    const parties = await this.partyRepository.findAll();
+  async findAll(userId: number) {
+    const parties = await this.partyRepository.findAll(userId);
     return parties;
   }
 

@@ -24,8 +24,11 @@ export default class PartyRepository {
     });
   }
 
-  async findAll(): Promise<Party[]> {
+  async findAll(userId: number): Promise<Party[]> {
     return this.prisma.party.findMany({
+      where: {
+        userId,
+      },
       orderBy: {
         createdAt: 'desc',
       },
