@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useState } from 'react';
 
 interface AlertMessage {
   type: 'success' | 'error';
@@ -23,9 +23,8 @@ export function AlertProvider({ children }: Props) {
   function handleClose() {
     setMessage(null);
   }
-
-  // const providerValue = useMemo(() => ({ message, setMessage, handleClose }), []);
   return (
+
     <AlertContext.Provider value={{ message, setMessage, handleClose }}>
       {children}
     </AlertContext.Provider>

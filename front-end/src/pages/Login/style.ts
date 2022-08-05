@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Wrapper from '../../../styles/elements/wrapper';
-import Input from '../../../styles/elements/input';
-import Button from '../../../styles/elements/button';
-import Form from '../../../styles/elements/form';
+import Wrapper from '../../styles/elements/wrapper';
+import Input from '../../styles/elements/input';
+import Button from '../../styles/elements/button';
+import Form from '../../styles/elements/form';
 
 export const LoginWrapper = styled(Wrapper)`
   position: relative;

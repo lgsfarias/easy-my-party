@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import api from '../../../services/api';
+import api from '../../services/api';
 import * as S from '../Login/style';
-import useAlert from '../../../hooks/useAlert';
+import useAlert from '../../hooks/useAlert';
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,13 +21,11 @@ export default function SignUp() {
 
     if (!email || !password || !confirmPassword || !name) {
       setMessage({ type: 'error', text: 'Todos os campos são obrigatórios!' });
-      console.log(1);
       return;
     }
 
     if (password !== confirmPassword) {
       setMessage({ type: 'error', text: 'As senhas devem ser iguais!' });
-      console.log(2);
       return;
     }
 
@@ -43,7 +41,7 @@ export default function SignUp() {
       if (error.response) {
         setMessage({
           type: 'error',
-          text: error.response.data,
+          text: error.response.data.message,
         });
       }
     }
