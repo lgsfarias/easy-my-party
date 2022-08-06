@@ -1,0 +1,83 @@
+import { PrismaClient, Task } from '@prisma/client';
+import prisma from '../config/database';
+
+export type CreateTaskData = Omit<Task, 'id' | 'createdAt' | 'done'>;
+
+export default class TaskRepository {
+  private prisma: PrismaClient;
+
+  constructor() {
+    this.prisma = prisma;
+  }
+
+  async create(data: CreateTaskData): Promise<Task> {
+    return this.prisma.task.create({
+      data,
+    });
+  }
+
+  async findById(id: number): Promise<Task | null> {
+    return this.prisma.task.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async findAll(partyId: number): Promise<Task[]> {
+    return this.prisma.task.findMany({
+      where: {
+        partyId,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+  }
+
+  async update(id: number, data: Partial<CreateTaskData>): Promise<Task> {
+    return this.prisma.task.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async finish(id: number): Promise<Task> {
+    return this.prisma.task.update({
+      where: {
+        id,
+      },
+      data: {
+        done: true,
+      },
+    });
+  }
+
+  async delete(id: number): Promise<Task> {
+    return this.prisma.task.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async donePercentage(partyId: number): Promise<number> {
+    const done = await this.prisma.task.count({
+      where: {
+        partyId,
+        done: true,
+      },
+    });
+    const total = await this.prisma.task.count({
+      where: {
+        partyId,
+      },
+    });
+    if (total === 0) {
+      return 100;
+    }
+    return Math.round((done / total) * 100);
+  }
+}
