@@ -35,7 +35,7 @@ export default class PartyRepository {
         userId,
       },
       orderBy: {
-        createdAt: 'desc',
+        date: 'asc',
       },
     });
   }
