@@ -18,7 +18,7 @@ export const LoginWrapper = styled(Wrapper)`
 `;
 
 export const Title = styled.h1`
-  font-family: 'Poller One', cursive;
+  font-family: ${(props) => props.theme.fonts.logo}, cursive;
   font-size: 32px;
   line-height: 50px;
   font-weight: bold;

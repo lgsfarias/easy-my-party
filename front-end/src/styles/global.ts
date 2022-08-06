@@ -56,7 +56,7 @@ export const Global = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    font-family: 'Roboto', sans-serif;
+    font-family: ${(props) => props.theme.fonts.primary}, sans-serif;
     background-color: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.text};
   }
