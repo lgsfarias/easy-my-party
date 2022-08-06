@@ -18,12 +18,13 @@ export const HomeWrapper = styled(Wrapper)`
 
   h2 {
     font-size: 1.5rem;
+    font-weight: 500;
   }
 `;
 
 export const AddButton = styled.button`
   background-color: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.yellow};
   border: none;
   border-radius: 5px;
   width: 2rem;

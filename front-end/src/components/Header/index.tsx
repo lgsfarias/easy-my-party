@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     <S.Header>
-      <h1>Easy My Party</h1>
+      <h1 onClick={() => navigate('/home')}>Easy My Party</h1>
       <MdLogout
         size="2rem"
         color={colors.text}
