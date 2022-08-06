@@ -3,10 +3,16 @@ import Wrapper from '../../styles/elements/wrapper';
 import Input from '../../styles/elements/input';
 
 export const HomeWrapper = styled(Wrapper)`
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 10px;
   gap: 10px;
+  overflow-y: auto;
 
   .add-party {
     display: flex;

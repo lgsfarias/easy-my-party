@@ -5,6 +5,7 @@ export const PartyWrapper = styled(Wrapper)`
   align-items: flex-start;
   gap: 0.5rem;
   height: 100px;
+  min-height: 100px;
   width: 100%;
   padding-left: 30px;
   background: ${(props) => props.theme.colors.primary};

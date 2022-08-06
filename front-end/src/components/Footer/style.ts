@@ -6,27 +6,27 @@ export const Footer = styled.footer`
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100%;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 20px;
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 0px -2px 4px rgba(200, 200, 200, 0.1);
 
   p {
     font-family: ${(props) => props.theme.fonts.logo}, cursive;
-    font-size: 18px;
+    font-size: 16px;
     color: ${(props) => props.theme.colors.text};
     cursor: pointer;
   }
 
   .progressbar {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     right: 0;
     left: 0;
     margin: auto;
-    width: 130px;
+    width: 110px;
   }
 `;
