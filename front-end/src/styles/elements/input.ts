@@ -9,6 +9,7 @@ const Input = styled.input`
   margin-bottom: 13px;
   font-size: 20px;
   line-height: 23px;
+  background-color: ${(props) => props.theme.colors.text};
   color: '#000';
 `;
 
