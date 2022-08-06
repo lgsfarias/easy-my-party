@@ -1,10 +1,5 @@
-import { Alert as MUIAlert, Slide, Snackbar } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+import { Alert as MUIAlert, Snackbar } from '@mui/material';
 import useAlert from '../../hooks/useAlert';
-
-function SlideTransition(props: TransitionProps) {
-  return <Slide {...props} direction="up" />;
-}
 
 export default function Alert() {
   const { message, handleClose } = useAlert();
@@ -13,7 +8,6 @@ export default function Alert() {
     <Snackbar
       open={!!message}
       autoHideDuration={6000}
-      TransitionComponent={SlideTransition}
       onClose={handleClose}
     >
       <MUIAlert

@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { PartyInterface } from '../../interfaces';
 import * as S from './style';
 
 export default function PartyBox({ party } : {party: PartyInterface}) {
+  const navigate = useNavigate();
   const date = new Date(party.date);
   const dateOptions : Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -13,7 +15,11 @@ export default function PartyBox({ party } : {party: PartyInterface}) {
   };
 
   return (
-    <S.PartyWrapper>
+    <S.PartyWrapper
+      onClick={() => {
+        navigate(`/party/${party.id}`);
+      }}
+    >
       <h1>{party.name}</h1>
       <p>
         {date.toLocaleDateString('pt-BR', dateOptions)}

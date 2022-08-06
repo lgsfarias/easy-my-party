@@ -1,44 +1,25 @@
-import { useEffect, useState, useContext } from 'react';
-import { MdLogout } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from 'styled-components';
-import Modal from 'react-modal';
+import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import br from 'date-fns/locale/pt-BR';
 import PartyBox from '../../components/PartyBox';
 import useAuth from '../../hooks/useAuth';
 import { PartyInterface } from '../../interfaces';
 import api from '../../services/api';
-import { Header } from '../../styles/elements/Header';
 import * as S from './style';
 import 'react-datepicker/dist/react-datepicker.css';
 import useAlert from '../../hooks/useAlert';
-
-Modal.setAppElement('#root');
+import ModalComponent from '../../components/Modal';
+import useModal from '../../hooks/useModal';
+import Header from '../../components/Header';
 
 export default function Home() {
-  const [parties, setParties] = useState<PartyInterface[]>([]);
-  const { token, signOut } = useAuth();
+  const { token } = useAuth();
   const { setMessage } = useAlert();
-  const { colors } = useContext(ThemeContext);
-  const navigate = useNavigate();
+  const { openModal, closeModal } = useModal();
+  const [parties, setParties] = useState<PartyInterface[]>([]);
   const [partyDate, setPartyDate] = useState<Date | null>(null);
   const [partyName, setPartyName] = useState<string>('');
   registerLocale('br', br);
-
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   async function getParties() {
     const response = await api.get('/parties', {
@@ -66,7 +47,7 @@ export default function Home() {
         },
       });
       console.log(response.data);
-      setIsOpen(false);
+      closeModal();
       setMessage({ type: 'success', text: 'Festa adicionada com sucesso' });
       getParties();
     } catch (error) {
@@ -80,20 +61,7 @@ export default function Home() {
 
   return (
     <>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        contentLabel="Delete Modal"
-        className="_"
-        overlayClassName="_"
-        contentElement={(props, children) => (
-          <S.ModalStyle {...props}>{children}</S.ModalStyle>
-        )}
-        overlayElement={(props, contentElement) => (
-          <S.OverlayStyle {...props}>{contentElement}</S.OverlayStyle>
-        )}
-      >
+      <ModalComponent>
         <h1>Nova Festa</h1>
         <S.ModalInput
           placeholder="Nome"
@@ -123,20 +91,10 @@ export default function Home() {
             Confirmar
           </button>
         </div>
-      </Modal>
-      <Header>
-        <h1>Easy My Party</h1>
-        <MdLogout
-          size="2rem"
-          color={colors.text}
-          onClick={
-          () => {
-            signOut();
-            navigate('/');
-          }
-        }
-        />
-      </Header>
+      </ModalComponent>
+
+      <Header />
+
       <S.HomeWrapper>
         <div className="add-party">
           <h2>Adicionar Festa</h2>

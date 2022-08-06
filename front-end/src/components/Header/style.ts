@@ -10,7 +10,7 @@ export const Header = styled.header`
   background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 0px 2px 4px rgba(200, 200, 200, 0.1);
 
-  h1{
+  h1 {
     font-family: ${(props) => props.theme.fonts.logo}, cursive;
     font-size: 2rem;
     font-weight: 500;
