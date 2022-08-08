@@ -20,6 +20,7 @@ export default function TasksPage() {
   const { openModal, closeModal } = useModal();
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [taskDescription, setTaskDescription] = useState<string>('');
+  const [donePercentage, setDonePercentage] = useState<number>(0);
 
   async function getTasks() {
     try {
@@ -63,8 +64,24 @@ export default function TasksPage() {
     console.log('finish task');
   }
 
+  async function getDonePercentage() {
+    try {
+      const response = await api.get(`/parties/${partyId}/tasks/done-percentage`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data);
+      setDonePercentage(response.data);
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Erro ao buscar porcentagem de tarefas concluídas' });
+    }
+  }
+
   useEffect(() => {
     getTasks();
+    getDonePercentage();
   }, []);
 
   return (
@@ -101,7 +118,7 @@ export default function TasksPage() {
           <TaskBox key={task.id} task={task} handleClick={handleFinishTask} />
         ))}
       </S.TasksPageWrapper>
-      <Footer />
+      <Footer donePercentage={donePercentage} />
     </>
   );
 }

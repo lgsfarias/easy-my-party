@@ -1,13 +1,17 @@
 import { useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+// import { useNavigate, Link } from 'react-router-dom';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import { ThemeContext } from 'styled-components';
 import * as S from './style';
 
-export default function Footer() {
-  const navigate = useNavigate();
+interface Props {
+  donePercentage: number;
+}
+
+export default function Footer({ donePercentage }: Props) {
+  // const navigate = useNavigate();
   const theme = useContext(ThemeContext);
 
   return (
@@ -15,7 +19,7 @@ export default function Footer() {
       <p>Convidados</p>
       <CircularProgressbar
         className="progressbar"
-        value={90}
+        value={donePercentage}
         text="Tarefas"
         background
         backgroundPadding={6}
