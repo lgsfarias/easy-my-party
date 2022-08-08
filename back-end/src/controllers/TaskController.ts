@@ -29,10 +29,16 @@ export default class TaskController {
   async getAll(req: Request, res: Response) {
     const { user } = res.locals;
     const partyId = Number(req.params.partyId);
-    console.log(req.params);
-    console.log(partyId);
     await this.taskUtils.verifyIfPartyIsFromUserOrThrow(partyId, user.id);
     const tasks = await this.taskService.findAll(partyId);
     res.status(200).json(tasks);
+  }
+
+  async getDonePercentage(req: Request, res: Response) {
+    const { user } = res.locals;
+    const partyId = Number(req.params.partyId);
+    await this.taskUtils.verifyIfPartyIsFromUserOrThrow(partyId, user.id);
+    const percentage = await this.taskService.donePercentage(partyId);
+    res.status(200).json(percentage);
   }
 }
