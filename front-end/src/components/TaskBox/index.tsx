@@ -1,4 +1,4 @@
-import { BsCheckSquareFill } from 'react-icons/bs';
+import { BsCheckSquareFill, BsTrash } from 'react-icons/bs';
 import { ThreeDots } from 'react-loader-spinner';
 import { AxiosError } from 'axios';
 import { TaskInterface } from '../../interfaces';
@@ -18,7 +18,7 @@ export default function TaskBox({ task, getTasks }: Props) {
 
   async function finishTask() {
     try {
-      const response = await api.put(`/parties/${task.partyId}/tasks/${task.id}/finish`, {}, {
+      await api.put(`/parties/${task.partyId}/tasks/${task.id}/finish`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -50,6 +50,9 @@ export default function TaskBox({ task, getTasks }: Props) {
           onClick={finishTask}
         />
       )}
+      <BsTrash
+        className="delete"
+      />
     </S.TaskWrapper>
   );
 }

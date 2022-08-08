@@ -27,4 +27,10 @@ export const TaskWrapper = styled(Wrapper)`
     position: absolute;
     right: 25px;
   }
+
+  .delete {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
 `;
