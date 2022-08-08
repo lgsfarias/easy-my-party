@@ -22,13 +22,17 @@ export default function Home() {
   registerLocale('br', br);
 
   async function getParties() {
-    const response = await api.get('/parties', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const response = await api.get('/parties', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    setParties(response.data);
+      setParties(response.data);
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Erro ao buscar festas' });
+    }
   }
 
   async function handleCreateParty() {
@@ -48,7 +52,7 @@ export default function Home() {
       });
       console.log(response.data);
       closeModal();
-      setMessage({ type: 'success', text: 'Festa adicionada com sucesso' });
+      // setMessage({ type: 'success', text: 'Festa adicionada com sucesso' });
       getParties();
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao adicionar festa' });

@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import PartyPage from './pages/PartyPage';
+import TasksPage from './pages/TasksPage';
 import SignUp from './pages/SignUp';
 
 export default function AppRoutes() {
@@ -15,7 +15,7 @@ export default function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/party/:partyId" element={<PartyPage />} />
+        <Route path="/party/:partyId/tasks" element={<TasksPage />} />
       </Routes>
     </Router>
   );

@@ -5,3 +5,11 @@ export interface PartyInterface {
   userId: string;
   createdAt: string;
 }
+
+export interface TaskInterface {
+  id: number;
+  description: string;
+  done: boolean;
+  partyId: number;
+  createdAt: string;
+}

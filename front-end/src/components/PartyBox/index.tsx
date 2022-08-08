@@ -17,7 +17,7 @@ export default function PartyBox({ party } : {party: PartyInterface}) {
   return (
     <S.PartyWrapper
       onClick={() => {
-        navigate(`/party/${party.id}`);
+        navigate(`/party/${party.id}/tasks`);
       }}
     >
       <h1>{party.name}</h1>
