@@ -5,16 +5,16 @@ import verifiTokenMiddleware from 'src/middlewares/verifyTokenMiddleware';
 const partyRouter = Router();
 const partyController = new PartyController();
 
-partyRouter.post('/', verifiTokenMiddleware, (req, res) =>
+partyRouter.post('/parties', verifiTokenMiddleware, (req, res) =>
   partyController.create(req, res),
 );
-partyRouter.get('/', verifiTokenMiddleware, (req, res) =>
+partyRouter.get('/parties', verifiTokenMiddleware, (req, res) =>
   partyController.getAll(req, res),
 );
-partyRouter.get('/:id', verifiTokenMiddleware, (req, res) =>
+partyRouter.get('/parties:id', verifiTokenMiddleware, (req, res) =>
   partyController.getById(req, res),
 );
-partyRouter.put('/:id', verifiTokenMiddleware, (req, res) =>
+partyRouter.put('/parties:id', verifiTokenMiddleware, (req, res) =>
   partyController.update(req, res),
 );
 

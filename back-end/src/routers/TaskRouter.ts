@@ -5,8 +5,12 @@ import verifyTokenMiddleware from 'src/middlewares/verifyTokenMiddleware';
 const taskRouter = Router();
 const taskController = new TaskController();
 
-taskRouter.post('/', verifyTokenMiddleware, (req, res) =>
+taskRouter.post('/parties/:partyId/tasks', verifyTokenMiddleware, (req, res) =>
   taskController.create(req, res),
+);
+
+taskRouter.get('/parties/:partyId/tasks', verifyTokenMiddleware, (req, res) =>
+  taskController.getAll(req, res),
 );
 
 export default taskRouter;

@@ -37,7 +37,8 @@
         "no-plusplus": "off",
         "max-len": "off",
         "function-paren-newline": "off",
-        "implicit-arrow-linebreak": "off"
+        "implicit-arrow-linebreak": "off",
+        "operator-linebreak": "off"
     },
     "settings": {
         "import/resolver": {
