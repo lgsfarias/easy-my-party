@@ -1,4 +1,5 @@
 import { PrismaClient, Task } from '@prisma/client';
+import AppError from '@utils/AppError';
 import prisma from '../config/database';
 
 export type CreateTaskData = Omit<Task, 'id' | 'createdAt' | 'done'>;
@@ -45,13 +46,23 @@ export default class TaskRepository {
   }
 
   async finish(id: number): Promise<Task> {
+    // toggle done
+    const task = await this.prisma.task.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+    const data = {
+      done: !task.done,
+    };
     return this.prisma.task.update({
       where: {
         id,
       },
-      data: {
-        done: true,
-      },
+      data,
     });
   }
 

@@ -25,4 +25,18 @@ export default class TaskUtils {
     }
     return true;
   }
+
+  async verifyIfTaskIsFromPartyOrThrow(
+    taskId: number,
+    partyId: number,
+  ): Promise<boolean> {
+    const task = await this.taskRepository.findById(taskId);
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+    if (task.partyId !== partyId) {
+      throw new AppError('You are not authorized to access this task', 403);
+    }
+    return true;
+  }
 }

@@ -41,4 +41,17 @@ export default class TaskController {
     const percentage = await this.taskService.donePercentage(partyId);
     res.status(200).json(percentage);
   }
+
+  async finishTask(req: Request, res: Response) {
+    console.log('finishTaskConstroller');
+    const { user } = res.locals;
+    const partyId = Number(req.params.partyId);
+    const taskId = Number(req.params.taskId);
+    await this.taskUtils.verifyIfPartyIsFromUserOrThrow(partyId, user.id);
+    await this.taskUtils.verifyIfTaskIsFromPartyOrThrow(taskId, partyId);
+    const task = await this.taskService.finish(taskId);
+    res
+      .status(200)
+      .json({ message: task.done ? 'Task finished' : 'Task not finished' });
+  }
 }

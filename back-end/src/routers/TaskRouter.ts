@@ -19,4 +19,10 @@ taskRouter.get(
   (req, res) => taskController.getDonePercentage(req, res),
 );
 
+taskRouter.put(
+  '/parties/:partyId/tasks/:taskId/finish',
+  verifyTokenMiddleware,
+  (req, res) => taskController.finishTask(req, res),
+);
+
 export default taskRouter;
