@@ -9,6 +9,7 @@ export const TasksPageWrapper = styled(Wrapper)`
   left: 0;
   right: 0;
   bottom: 80px;
+  min-height: 0;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 10px;

@@ -9,6 +9,7 @@ import useAlert from '../../hooks/useAlert';
 import ModalComponent from '../../components/Modal';
 import useModal from '../../hooks/useModal';
 import { TaskInterface } from '../../interfaces';
+import TaskBox from '../../components/TaskBox';
 
 // import * as S from './style';
 
@@ -49,12 +50,17 @@ export default function TasksPage() {
         },
       });
       console.log(response.data);
+      setTaskDescription('');
       closeModal();
       // setMessage({ type: 'success', text: 'Tarefa adicionada com sucesso' });
       getTasks();
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao adicionar tarefa' });
     }
+  }
+
+  async function handleFinishTask() {
+    console.log('finish task');
   }
 
   useEffect(() => {
@@ -91,16 +97,9 @@ export default function TasksPage() {
           <h2>Adicionar Tarefa</h2>
           <S.TasksAddButton onClick={openModal}>+</S.TasksAddButton>
         </div>
-        <div className="tasks">
-          {tasks?.map((task) => (
-            <div key={task.id} className="task">
-              <h1>{task.description}</h1>
-              <p>
-                {JSON.stringify(task.done)}
-              </p>
-            </div>
-          ))}
-        </div>
+        {tasks?.map((task) => (
+          <TaskBox key={task.id} task={task} handleClick={handleFinishTask} />
+        ))}
       </S.TasksPageWrapper>
       <Footer />
     </>
