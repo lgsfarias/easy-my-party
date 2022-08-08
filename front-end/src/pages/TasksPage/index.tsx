@@ -22,6 +22,19 @@ export default function TasksPage() {
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [donePercentage, setDonePercentage] = useState<number>(0);
 
+  async function getDonePercentage() {
+    try {
+      const response = await api.get(`/parties/${partyId}/tasks/done-percentage`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDonePercentage(response.data);
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Erro ao buscar porcentagem de tarefas concluídas' });
+    }
+  }
+
   async function getTasks() {
     try {
       const response = await api.get(`/parties/${partyId}/tasks`, {
@@ -29,7 +42,7 @@ export default function TasksPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      await getDonePercentage();
       setTasks(response.data);
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao buscar tarefas' });
@@ -57,25 +70,6 @@ export default function TasksPage() {
       getTasks();
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao adicionar tarefa' });
-    }
-  }
-
-  async function handleFinishTask() {
-    console.log('finish task');
-  }
-
-  async function getDonePercentage() {
-    try {
-      const response = await api.get(`/parties/${partyId}/tasks/done-percentage`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log(response.data);
-      setDonePercentage(response.data);
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Erro ao buscar porcentagem de tarefas concluídas' });
     }
   }
 
@@ -115,7 +109,7 @@ export default function TasksPage() {
           <S.TasksAddButton onClick={openModal}>+</S.TasksAddButton>
         </div>
         {tasks?.map((task) => (
-          <TaskBox key={task.id} task={task} handleClick={handleFinishTask} />
+          <TaskBox key={task.id} task={task} getTasks={() => getTasks()} />
         ))}
       </S.TasksPageWrapper>
       <Footer donePercentage={donePercentage} />
