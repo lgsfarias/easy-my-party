@@ -22,24 +22,51 @@ model User {
 }
 
 model Party {
-  id        Int      @id @default(autoincrement())
-  name      String
-  date      DateTime @db.Timestamptz()
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int      @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  date      DateTime  @db.Timestamptz()
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int       @map("user_id")
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
   tasks     Task[]
+  addresses Address[]
+  guests    Guest[]
 
   @@map("parties")
 }
 
 model Task {
   id          Int      @id @default(autoincrement())
-  description String
+  description String   @unique
   done        Boolean  @default(false)
   party       Party    @relation(fields: [partyId], references: [id])
   partyId     Int      @map("party_id")
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("tasks")
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  street    String
+  city      String
+  state     String
+  party     Party    @relation(fields: [partyId], references: [id])
+  partyId   Int      @unique @map("party_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("addresses")
+}
+
+model Guest {
+  id         Int      @id @default(autoincrement())
+  name       String
+  dependents Int
+  email      String   @unique
+  confirmed  Boolean  @default(false)
+  party      Party    @relation(fields: [partyId], references: [id])
+  partyId    Int      @map("party_id")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@map("guests")
 }
