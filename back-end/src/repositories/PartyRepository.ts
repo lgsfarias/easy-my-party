@@ -26,6 +26,20 @@ export default class PartyRepository {
       where: {
         id,
       },
+      include: {
+        addresses: true,
+      },
+    });
+  }
+
+  async findByName(name: string): Promise<Party | null> {
+    return this.prisma.party.findUnique({
+      where: {
+        name,
+      },
+      include: {
+        addresses: true,
+      },
     });
   }
 
@@ -33,6 +47,9 @@ export default class PartyRepository {
     return this.prisma.party.findMany({
       where: {
         userId,
+      },
+      include: {
+        addresses: true,
       },
       orderBy: {
         date: 'asc',

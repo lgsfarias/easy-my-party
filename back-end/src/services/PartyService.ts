@@ -2,6 +2,7 @@ import { Party } from '@prisma/client';
 import PartyRepository, {
   CreatePartyData,
 } from '@repositories/PartyRepository';
+import AppError from '@utils/AppError';
 
 export default class PartyService {
   private partyRepository: PartyRepository;
@@ -11,22 +12,25 @@ export default class PartyService {
   }
 
   async create(data: CreatePartyData): Promise<Party> {
-    const party = await this.partyRepository.create(data);
-    return party;
+    return this.partyRepository.create(data);
   }
 
   async findAll(userId: number): Promise<Party[]> {
-    const parties = await this.partyRepository.findAll(userId);
-    return parties;
+    return this.partyRepository.findAll(userId);
   }
 
   async findById(id: number): Promise<Party | null> {
-    const party = await this.partyRepository.findById(id);
-    return party;
+    return this.partyRepository.findById(id);
   }
 
   async update(id: number, data: Partial<CreatePartyData>): Promise<Party> {
-    const party = await this.partyRepository.update(id, data);
-    return party;
+    return this.partyRepository.update(id, data);
+  }
+
+  async verifyIfPartyAlreadyExists(name: string): Promise<void> {
+    const party = await this.partyRepository.findByName(name);
+    if (party) {
+      throw new AppError('Party already exists', 400);
+    }
   }
 }
