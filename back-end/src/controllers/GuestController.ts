@@ -61,7 +61,7 @@ export default class GuestController {
     const token = req.query.token as string;
     const guestId = Number(req.params.guestId);
 
-    const guest = await this.guestService.confirm(token, guestId);
-    res.status(200).json(guest);
+    await this.guestService.confirm(token, guestId);
+    res.status(200).json({ message: 'Guest confirmed' });
   }
 }
