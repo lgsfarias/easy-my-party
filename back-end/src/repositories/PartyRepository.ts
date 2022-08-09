@@ -1,7 +1,9 @@
-import { PrismaClient, Party } from '@prisma/client';
+import { PrismaClient, Party, Address } from '@prisma/client';
 import prisma from '../config/database';
 
 export type CreatePartyData = Omit<Party, 'id' | 'createdAt'>;
+
+export type PartyWithAddress = Party & { addresses: Address[] };
 
 export default class PartyRepository {
   private prisma: PrismaClient;
@@ -21,7 +23,7 @@ export default class PartyRepository {
     });
   }
 
-  async findById(id: number): Promise<Party | null> {
+  async findById(id: number): Promise<PartyWithAddress | null> {
     return this.prisma.party.findUnique({
       where: {
         id,
@@ -36,7 +38,7 @@ export default class PartyRepository {
     name: string,
     date: Date,
     userId: number,
-  ): Promise<Party | null> {
+  ): Promise<PartyWithAddress | null> {
     return this.prisma.party.findUnique({
       where: {
         name_date_userId: {
@@ -51,7 +53,7 @@ export default class PartyRepository {
     });
   }
 
-  async findAll(userId: number): Promise<Party[]> {
+  async findAll(userId: number): Promise<PartyWithAddress[]> {
     return this.prisma.party.findMany({
       where: {
         userId,
