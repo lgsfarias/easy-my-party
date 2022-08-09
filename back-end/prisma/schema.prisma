@@ -37,12 +37,13 @@ model Party {
 
 model Task {
   id          Int      @id @default(autoincrement())
-  description String   @unique
+  description String
   done        Boolean  @default(false)
   party       Party    @relation(fields: [partyId], references: [id])
   partyId     Int      @map("party_id")
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
+  @@unique([description, partyId])
   @@map("tasks")
 }
 
@@ -62,11 +63,12 @@ model Guest {
   id         Int      @id @default(autoincrement())
   name       String
   dependents Int
-  email      String   @unique
+  email      String
   confirmed  Boolean  @default(false)
   party      Party    @relation(fields: [partyId], references: [id])
   partyId    Int      @map("party_id")
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
+  @@unique([email, partyId])
   @@map("guests")
 }
