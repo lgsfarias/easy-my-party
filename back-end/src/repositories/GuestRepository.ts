@@ -24,6 +24,17 @@ export default class GuestRepository {
     });
   }
 
+  async findByEmail(email: string, partyId: number): Promise<Guest | null> {
+    return this.prisma.guest.findUnique({
+      where: {
+        email_partyId: {
+          email,
+          partyId,
+        },
+      },
+    });
+  }
+
   async findAll(partyId: number): Promise<Guest[]> {
     return this.prisma.guest.findMany({
       where: {
