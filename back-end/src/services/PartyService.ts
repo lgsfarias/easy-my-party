@@ -27,8 +27,12 @@ export default class PartyService {
     return this.partyRepository.update(id, data);
   }
 
-  async verifyIfPartyAlreadyExists(name: string): Promise<void> {
-    const party = await this.partyRepository.findByName(name);
+  async verifyIfPartyAlreadyExists(
+    name: string,
+    date: Date,
+    userId: number,
+  ): Promise<void> {
+    const party = await this.partyRepository.findByName(name, date, userId);
     if (party) {
       throw new AppError('Party already exists', 400);
     }

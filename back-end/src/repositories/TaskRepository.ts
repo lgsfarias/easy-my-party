@@ -91,4 +91,18 @@ export default class TaskRepository {
     }
     return Math.round((done / total) * 100);
   }
+
+  async findByDescription(
+    description: string,
+    partyId: number,
+  ): Promise<Task | null> {
+    return this.prisma.task.findUnique({
+      where: {
+        description_partyId: {
+          description,
+          partyId,
+        },
+      },
+    });
+  }
 }

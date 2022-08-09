@@ -19,6 +19,7 @@ export default class TaskController {
     const { description }: Omit<CreateTaskData, 'userId' | 'partyId'> =
       req.body;
     await this.taskUtils.verifyIfPartyIsFromUserOrThrow(partyId, user.id);
+    await this.taskUtils.verifyIfTaskAlreadyExistsOrThrow(description, partyId);
     const task = await this.taskService.create({
       description,
       partyId,

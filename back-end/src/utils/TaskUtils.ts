@@ -39,4 +39,18 @@ export default class TaskUtils {
     }
     return true;
   }
+
+  async verifyIfTaskAlreadyExistsOrThrow(
+    description: string,
+    partyId: number,
+  ): Promise<boolean> {
+    const task = await this.taskRepository.findByDescription(
+      description,
+      partyId,
+    );
+    if (task) {
+      throw new AppError('Task already exists', 400);
+    }
+    return true;
+  }
 }

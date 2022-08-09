@@ -19,7 +19,7 @@ export default class PartyController {
     const { name, date }: Omit<CreatePartyData, 'userId'> = req.body;
     const { street, city, state }: Omit<CreateAddressData, 'partyId'> =
       req.body;
-    await this.partyService.verifyIfPartyAlreadyExists(name);
+    await this.partyService.verifyIfPartyAlreadyExists(name, date, user.id);
     const party = await this.partyService.create({
       name,
       date,

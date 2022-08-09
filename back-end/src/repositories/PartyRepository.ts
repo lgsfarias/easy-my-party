@@ -32,10 +32,18 @@ export default class PartyRepository {
     });
   }
 
-  async findByName(name: string): Promise<Party | null> {
+  async findByName(
+    name: string,
+    date: Date,
+    userId: number,
+  ): Promise<Party | null> {
     return this.prisma.party.findUnique({
       where: {
-        name,
+        name_date_userId: {
+          name,
+          date: new Date(date),
+          userId,
+        },
       },
       include: {
         addresses: true,
