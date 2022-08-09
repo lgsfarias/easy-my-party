@@ -10,6 +10,7 @@ import useAlert from '../../hooks/useAlert';
 import ModalComponent from '../../components/Modal';
 import useModal from '../../hooks/useModal';
 import { GuestInterface } from '../../interfaces';
+import GuestBox from '../../components/GuestBox';
 
 export default function GuestsPage() {
   const { partyId } = useParams();
@@ -35,32 +36,32 @@ export default function GuestsPage() {
   }
 
   async function handleCreateGuest() {
-    // if (!guestName || !guestEmail || !guestDependents) {
-    //   setMessage({ type: 'error', text: 'Preencha todos os campos' });
-    //   return;
-    // }
+    if (!guestName || !guestEmail || !guestDependents) {
+      setMessage({ type: 'error', text: 'Preencha todos os campos' });
+      return;
+    }
 
-    // try {
-    //   await api.post(`/parties/${partyId}/guests`, {
-    //     name: guestName,
-    //     email: guestEmail,
-    //     dependents: parseInt(guestDependents),
-    //   }, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   setGuestName('');
-    //   setGuestEmail('');
-    //   setGuestDependents(0);
-    //   closeModal();
-    //   getGuests();
-    // } catch (error: Error | AxiosError | any) {
-    //   if (error.response) {
-    //     setMessage({ type: 'error', text: error.response.data.message });
-    //   }
-    // }
-    console.log('handleCreateGuest');
+    try {
+      await api.post(`/parties/${partyId}/guests`, {
+        name: guestName,
+        email: guestEmail,
+        dependents: Number(guestDependents),
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setGuestName('');
+      setGuestEmail('');
+      setGuestDependents('');
+      closeModal();
+      getGuests();
+      setMessage({ type: 'success', text: 'Convidado criado com sucesso' });
+    } catch (error: Error | AxiosError | any) {
+      if (error.response) {
+        setMessage({ type: 'error', text: error.response.data.message });
+      }
+    }
   }
 
   useEffect(() => {
@@ -82,10 +83,10 @@ export default function GuestsPage() {
           onChange={(e) => setGuestName(e.target.value)}
         />
         <S.ModalInput
-          type="number"
+          type="text"
           placeholder="Numero de Dependentes"
           value={guestDependents}
-          onChange={(e) => setGuestDependents(Number(e.target.value))}
+          onChange={(e) => setGuestDependents(e.target.value)}
         />
         <S.ModalInput
           type="email"
@@ -113,16 +114,7 @@ export default function GuestsPage() {
           <S.GuestsAddButton onClick={() => openModal()}>+</S.GuestsAddButton>
         </div>
         {guests.map((guest) => (
-          <div key={guest.id}>
-            <h1>{guest.name}</h1>
-            <p>{guest.email}</p>
-            <p>{guest.dependents}</p>
-            <p>
-              confirmed:
-              {' '}
-              {JSON.stringify(guest.confirmed)}
-            </p>
-          </div>
+          <GuestBox key={guest.id} guest={guest} />
         ))}
       </S.GuestsPageWrapper>
       <Footer />
