@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { PartyInterface } from '../../interfaces';
+import useParty from '../../hooks/useParty';
+import { PartyInterface, AddressInterface } from '../../interfaces';
 import * as S from './style';
 
-export default function PartyBox({ party } : {party: PartyInterface}) {
+type PartyInterfaceWithAddress = PartyInterface & { address: AddressInterface };
+
+export default function PartyBox({ party } : {party: PartyInterfaceWithAddress}) {
+  const { setParty } = useParty();
   const navigate = useNavigate();
   const date = new Date(party.date);
   const dateOptions : Intl.DateTimeFormatOptions = {
@@ -17,6 +21,7 @@ export default function PartyBox({ party } : {party: PartyInterface}) {
   return (
     <S.PartyWrapper
       onClick={() => {
+        setParty(party);
         navigate(`/party/${party.id}/tasks`);
       }}
     >
