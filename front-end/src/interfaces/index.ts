@@ -13,3 +13,12 @@ export interface TaskInterface {
   partyId: number;
   createdAt: string;
 }
+
+export interface AddressInterface {
+  id: number;
+  street: string;
+  city: string;
+  state: string;
+  partyId: number;
+  createdAt: string;
+}
