@@ -23,7 +23,7 @@ model User {
 
 model Party {
   id        Int       @id @default(autoincrement())
-  name      String    @unique
+  name      String
   date      DateTime  @db.Timestamptz()
   user      User      @relation(fields: [userId], references: [id])
   userId    Int       @map("user_id")
@@ -32,6 +32,7 @@ model Party {
   addresses Address[]
   guests    Guest[]
 
+  @@unique([name, date, userId])
   @@map("parties")
 }
 
