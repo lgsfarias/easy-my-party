@@ -19,6 +19,9 @@ export default function Home() {
   const [parties, setParties] = useState<PartyInterface[]>([]);
   const [partyDate, setPartyDate] = useState<Date | null>(null);
   const [partyName, setPartyName] = useState<string>('');
+  const [partyStreet, setPartyStreet] = useState<string>('');
+  const [partyCity, setPartyCity] = useState<string>('');
+  const [partyState, setPartyState] = useState<string>('');
   registerLocale('br', br);
 
   async function getParties() {
@@ -45,6 +48,9 @@ export default function Home() {
       const response = await api.post('/parties', {
         name: partyName,
         date: partyDate,
+        street: partyStreet,
+        city: partyCity,
+        state: partyState,
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,6 +88,21 @@ export default function Home() {
           locale="br"
           className="date-picker"
           placeholderText="Data"
+        />
+        <S.ModalInput
+          placeholder="Endereço"
+          value={partyStreet}
+          onChange={(e) => setPartyStreet(e.target.value)}
+        />
+        <S.ModalInput
+          placeholder="Cidade"
+          value={partyCity}
+          onChange={(e) => setPartyCity(e.target.value)}
+        />
+        <S.ModalInput
+          placeholder="Estado"
+          value={partyState}
+          onChange={(e) => setPartyState(e.target.value)}
         />
         <div className="buttons">
           <button type="button" className="white" onClick={closeModal}>

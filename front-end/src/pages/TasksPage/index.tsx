@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { AxiosError } from 'axios';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import useAuth from '../../hooks/useAuth';
@@ -68,8 +69,10 @@ export default function TasksPage() {
       closeModal();
       // setMessage({ type: 'success', text: 'Tarefa adicionada com sucesso' });
       getTasks();
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Erro ao adicionar tarefa' });
+    } catch (error: Error | AxiosError | any) {
+      if (error.response) {
+        setMessage({ type: 'error', text: error.response.data.message });
+      }
     }
   }
 
