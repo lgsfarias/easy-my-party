@@ -3,6 +3,7 @@ import sgMail from '@sendgrid/mail';
 import authRouter from './AuthRouter';
 import partyRouter from './PartyRouter';
 import taskRouter from './TaskRouter';
+import guestRouter from './GuestRouter';
 
 const router = Router();
 
@@ -45,5 +46,6 @@ router.post('/sendGridTest', async (req: Request, res: Response) => {
 router.use(authRouter);
 router.use(partyRouter);
 router.use(taskRouter);
+router.use(guestRouter);
 
 export default router;

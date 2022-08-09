@@ -11,17 +11,16 @@ import ModalComponent from '../../components/Modal';
 import useModal from '../../hooks/useModal';
 import { TaskInterface } from '../../interfaces';
 import TaskBox from '../../components/TaskBox';
-
-// import * as S from './style';
+import useParty from '../../hooks/useParty';
 
 export default function TasksPage() {
   const { partyId } = useParams();
   const { token } = useAuth();
   const { setMessage } = useAlert();
   const { openModal, closeModal } = useModal();
+  const { donePercentage, setDonePercentage } = useParty();
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [taskDescription, setTaskDescription] = useState<string>('');
-  const [donePercentage, setDonePercentage] = useState<number>(0);
 
   async function getDonePercentage() {
     try {
@@ -115,7 +114,7 @@ export default function TasksPage() {
           <TaskBox key={task.id} task={task} getTasks={() => getTasks()} />
         ))}
       </S.TasksPageWrapper>
-      <Footer donePercentage={donePercentage} />
+      <Footer />
     </>
   );
 }

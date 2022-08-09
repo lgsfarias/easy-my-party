@@ -50,9 +50,9 @@ export default function TaskBox({ task, getTasks }: Props) {
           onClick={finishTask}
         />
       )}
-      <BsTrash
+      {/* <BsTrash
         className="delete"
-      />
+      /> */}
     </S.TaskWrapper>
   );
 }
