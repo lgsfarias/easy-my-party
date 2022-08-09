@@ -3,7 +3,7 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import br from 'date-fns/locale/pt-BR';
 import PartyBox from '../../components/PartyBox';
 import useAuth from '../../hooks/useAuth';
-import { PartyInterface } from '../../interfaces';
+import { PartyInterface, AddressInterface } from '../../interfaces';
 import api from '../../services/api';
 import * as S from './style';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -12,11 +12,13 @@ import ModalComponent from '../../components/Modal';
 import useModal from '../../hooks/useModal';
 import Header from '../../components/Header';
 
+type PartyInterfaceWithAddress = PartyInterface & { address: AddressInterface };
+
 export default function Home() {
   const { token } = useAuth();
   const { setMessage } = useAlert();
   const { openModal, closeModal } = useModal();
-  const [parties, setParties] = useState<PartyInterface[]>([]);
+  const [parties, setParties] = useState<PartyInterfaceWithAddress[]>([]);
   const [partyDate, setPartyDate] = useState<Date | null>(null);
   const [partyName, setPartyName] = useState<string>('');
   const [partyStreet, setPartyStreet] = useState<string>('');

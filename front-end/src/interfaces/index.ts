@@ -22,3 +22,13 @@ export interface AddressInterface {
   partyId: number;
   createdAt: string;
 }
+
+export interface GuestInterface {
+  id: number;
+  name: string;
+  dependents: number;
+  email: string;
+  confirmed: boolean;
+  partyId: number;
+  createdAt: string;
+}
