@@ -1,7 +1,7 @@
 {
   "name": "back-end",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "author": "Luiz Gustavo Santos Farias <lgsfarias.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
