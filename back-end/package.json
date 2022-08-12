@@ -5,7 +5,7 @@
   "author": "Luiz Gustavo Santos Farias <lgsfarias.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
+    "build": "yarn prisma migrate deploy && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
     "start": "node dist/src/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules src/server.ts",
     "test": "jest"
