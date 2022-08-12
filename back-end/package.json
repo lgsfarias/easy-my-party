@@ -5,8 +5,8 @@
   "author": "Luiz Gustavo Santos Farias <lgsfarias.dev@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "node dist/server.js",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist",
+    "start": "node dist/src/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules src/server.ts",
     "test": "jest"
   },
@@ -34,6 +34,7 @@
     "ts-jest": "^28.0.7",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.0.0",
+    "tscpaths": "^0.0.9",
     "typescript": "^4.7.4"
   },
   "dependencies": {

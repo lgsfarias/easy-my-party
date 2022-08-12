@@ -1,6 +1,6 @@
 import GuestController from '@contollers/GuestController';
 import { Router } from 'express';
-import verifyTokenMiddleware from 'src/middlewares/verifyTokenMiddleware';
+import verifyTokenMiddleware from '../middlewares/verifyTokenMiddleware';
 
 const guestRouter = Router();
 const guestController = new GuestController();
