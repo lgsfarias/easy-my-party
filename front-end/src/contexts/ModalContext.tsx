@@ -2,7 +2,6 @@ import { createContext, useState } from 'react';
 
 interface ModalContextInterface {
   modalIsOpen: boolean;
-  setIsOpen: (newIsOpen: boolean) => void;
   openModal: () => void;
   afterOpenModal: () => void;
   closeModal: () => void;
