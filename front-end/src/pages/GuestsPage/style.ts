@@ -13,6 +13,7 @@ export const GuestsPageWrapper = styled(Wrapper)`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 10px;
+  padding-bottom: 50px;
   gap: 10px;
   overflow-y: auto;
 

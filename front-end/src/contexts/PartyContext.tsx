@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import usePersistedState from '../hooks/usePersistedState';
 import { AddressInterface, PartyInterface } from '../interfaces';
 
 type PartyWithAddress = PartyInterface & { address: AddressInterface };
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export function PartyProvider({ children }: Props) {
-  const [party, setParty] = useState<PartyWithAddress | null>(null);
+  const [party, setParty] = usePersistedState('party', null);
   const [donePercentage, setDonePercentage] = useState<number>(0);
 
   return (

@@ -18,7 +18,7 @@ export default function TasksPage() {
   const { token } = useAuth();
   const { setMessage } = useAlert();
   const { openModal, closeModal } = useModal();
-  const { donePercentage, setDonePercentage } = useParty();
+  const { setDonePercentage } = useParty();
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
   const [taskDescription, setTaskDescription] = useState<string>('');
 
@@ -66,7 +66,6 @@ export default function TasksPage() {
       console.log(response.data);
       setTaskDescription('');
       closeModal();
-      // setMessage({ type: 'success', text: 'Tarefa adicionada com sucesso' });
       getTasks();
     } catch (error: Error | AxiosError | any) {
       if (error.response) {

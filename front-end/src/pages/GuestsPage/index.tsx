@@ -22,6 +22,11 @@ export default function GuestsPage() {
   const [guestDependents, setGuestDependents] = useState<string>('');
   const [guestEmail, setGuestEmail] = useState<string>('');
 
+  const totalGuests = guests.reduce((acc, curr) => acc + curr.dependents + 1, 0);
+  const totalGuestsConfirmed = guests
+    .filter((guest) => guest.confirmed)
+    .reduce((acc, curr) => acc + curr.dependents + 1, 0);
+
   async function getGuests() {
     try {
       const response = await api.get(`/parties/${partyId}/guests`, {
@@ -116,6 +121,21 @@ export default function GuestsPage() {
         {guests.map((guest) => (
           <GuestBox key={guest.id} guest={guest} />
         ))}
+        <div style={{
+          display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', marginTop: '2rem',
+        }}
+        >
+          <h2>
+            Total de convidados:
+            {' '}
+            {totalGuests}
+          </h2>
+          <h2>
+            Confirmados:
+            {' '}
+            {totalGuestsConfirmed}
+          </h2>
+        </div>
       </S.GuestsPageWrapper>
       <Footer />
     </div>
