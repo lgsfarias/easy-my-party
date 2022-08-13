@@ -32,6 +32,7 @@ export default function SignUp() {
         name,
         email,
         password,
+        confirmPassword,
       });
       setMessage({ type: 'success', text: 'Usuário criado com sucesso!' });
       navigate('/');
