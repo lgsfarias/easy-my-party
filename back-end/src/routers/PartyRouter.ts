@@ -1,6 +1,6 @@
 import PartyController from '@contollers/PartyControler';
 import { Router } from 'express';
-import verifySchema from 'src/middlewares/validateSchemaMiddleware';
+import verifySchema from '../middlewares/validateSchemaMiddleware';
 import verifyTokenMiddleware from '../middlewares/verifyTokenMiddleware';
 import { createPartySchema, updatePartySchema } from '../schemas';
 
