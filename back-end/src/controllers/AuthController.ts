@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import AuthUtils from '@utils/AuthUtils';
 import UserService from '@services/UserService';
 
 export default class AuthController {
@@ -11,20 +10,17 @@ export default class AuthController {
 
   async sigup(req: Request, res: Response) {
     const { name, email, password } = req.body;
-    await this.userService.verifyIfUserExists(email);
-    const hashedPassword = AuthUtils.encryptPassword(password);
     const user = await this.userService.create({
       name,
       email,
-      password: hashedPassword,
+      password,
     });
     res.status(201).json(user);
   }
 
   async login(req: Request, res: Response) {
     const { email, password } = req.body;
-    const user = await this.userService.verifyCredentials(email, password);
-    const token = AuthUtils.generateToken(user.id);
+    const token = await this.userService.verifyCredentials(email, password);
     res.send({ token });
   }
 

@@ -5,12 +5,22 @@ import AppError from '@utils/AppError';
 export default class UserService {
   private userRepository: UserRepository;
 
+  private authUtils: AuthUtils;
+
   constructor() {
     this.userRepository = new UserRepository();
+    this.authUtils = new AuthUtils();
   }
 
   async create(data: CreateUserData) {
-    const user = await this.userRepository.create(data);
+    const { name, email, password } = data;
+    await this.authUtils.verifyIfUserExists(email);
+    const hashedPassword = AuthUtils.encryptPassword(password);
+    const user = await this.userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
     return user;
   }
 
@@ -24,13 +34,6 @@ export default class UserService {
     return user;
   }
 
-  async verifyIfUserExists(email: string) {
-    const user = await this.userRepository.findByEmail(email);
-    if (user) {
-      throw new AppError('User already exists', 400);
-    }
-  }
-
   async verifyCredentials(email: string, password: string) {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
@@ -40,6 +43,6 @@ export default class UserService {
     if (!isPasswordValid) {
       throw new AppError('Email or password invalid', 401);
     }
-    return user;
+    return AuthUtils.generateToken(user.id);
   }
 }
