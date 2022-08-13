@@ -100,7 +100,7 @@ export default class GuestUtils {
         },
         confirmationlink: `${String(
           process.env.FRONTEND_URL,
-        )}/confirm?token=${token}`,
+        )}/confirmation?token=${token}`,
       },
     };
 
