@@ -21,8 +21,6 @@ guestRouter.get(
   (req, res) => guestController.getById(req, res),
 );
 
-guestRouter.put('/parties/:partyId/guests/:guestId/confirm', (req, res) =>
-  guestController.confirm(req, res),
-);
+guestRouter.post('/confirm', (req, res) => guestController.confirm(req, res));
 
 export default guestRouter;

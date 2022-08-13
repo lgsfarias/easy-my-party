@@ -98,10 +98,9 @@ export default class GuestUtils {
             state: party.addresses[0].state,
           },
         },
-        // confirmationlink: `${String(
-        //   process.env.FRONTEND_URL,
-        // )}/confirm/${token}`,
-        confirmationlink: `https://www.google.com/search?q=${token}`,
+        confirmationlink: `${String(
+          process.env.FRONTEND_URL,
+        )}/confirm?token=${token}`,
       },
     };
 

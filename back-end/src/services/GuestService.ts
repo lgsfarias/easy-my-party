@@ -43,11 +43,12 @@ export default class GuestService {
     return this.guestRepository.update(id, data);
   }
 
-  async confirm(token: string, id: number): Promise<Guest> {
+  async confirm(token: string): Promise<Guest> {
     const { guestId } = GuestUtils.verifyToken(token) as { guestId: number };
-    if (guestId !== id) {
+    if (!guestId) {
       throw new AppError('Invalid token', 401);
     }
+    console.log(guestId);
     return this.guestRepository.confirm(guestId);
   }
 

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import GuestService from '@services/GuestService';
 import { CreateGuestData } from '@repositories/GuestRepository';
 import GuestUtils from '@utils/GuestUtils';
+import AppError from '@utils/AppError';
 
 export default class GuestController {
   private readonly guestService: GuestService;
@@ -58,10 +59,14 @@ export default class GuestController {
   }
 
   async confirm(req: Request, res: Response) {
-    const token = req.query.token as string;
-    const guestId = Number(req.params.guestId);
+    const authorization = req.headers.authorization as string;
+    const token = authorization.split(' ')[1];
 
-    await this.guestService.confirm(token, guestId);
+    if (!token) {
+      throw new AppError('Invalid token', 401);
+    }
+
+    await this.guestService.confirm(token);
     res.status(200).json({ message: 'Guest confirmed' });
   }
 }
