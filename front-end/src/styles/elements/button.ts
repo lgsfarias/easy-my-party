@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
   width: 100%;

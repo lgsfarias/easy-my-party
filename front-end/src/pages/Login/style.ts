@@ -19,9 +19,9 @@ export const LoginWrapper = styled(Wrapper)`
 
 export const Title = styled.h1`
   font-family: ${(props) => props.theme.fonts.logo}, cursive;
-  font-size: 32px;
+  font-size: 48px;
   line-height: 50px;
-  font-weight: bold;
+  font-weight: 800;
   margin-bottom: 24px;
 `;
 

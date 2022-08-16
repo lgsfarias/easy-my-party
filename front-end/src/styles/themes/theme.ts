@@ -8,7 +8,8 @@ const theme = {
   },
   fonts: {
     primary: 'Roboto',
-    logo: 'Poller One',
+    // logo: 'Poller One',
+    logo: 'Inter',
   },
 };
 

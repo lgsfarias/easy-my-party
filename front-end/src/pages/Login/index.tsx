@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
+import { flexbox } from '@mui/system';
 import * as S from './style';
 import api from '../../services/api';
 import useAlert from '../../hooks/useAlert';
@@ -10,12 +12,14 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const { setMessage } = useAlert();
   const { login } = useAuth();
 
-  async function handleSubmit(e : React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage(null);
+    setLoading(true);
 
     if (!email || !password) {
       setMessage({ type: 'error', text: 'Todos os campos são obrigatórios!' });
@@ -31,8 +35,10 @@ export default function Login() {
       });
       console.log(token);
       login(token);
+      setLoading(false);
       navigate('/home');
     } catch (error: Error | AxiosError | any) {
+      setLoading(false);
       if (error.response) {
         setMessage({
           type: 'error',
@@ -51,14 +57,25 @@ export default function Login() {
           placeholder="e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
         />
         <S.Input
           type="password"
           placeholder="senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={loading}
         />
-        <S.Button type="submit">Login</S.Button>
+        <S.Button
+          type="submit"
+          disabled={loading}
+        >
+          {
+            loading
+              ? <ThreeDots color="#FFF" />
+              : 'Login'
+          }
+        </S.Button>
         <h2
           className="link"
           onClick={() => navigate('/signup')}
