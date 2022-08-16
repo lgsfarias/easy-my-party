@@ -34,6 +34,7 @@
         "react/jsx-no-bind": ["off"],
         "react/jsx-no-constructed-context-values": ["off"],
         "jsx-a11y/click-events-have-key-events": ["off"],
-        "jsx-a11y/no-noninteractive-element-interactions": ["off"]
+        "jsx-a11y/no-noninteractive-element-interactions": ["off"],
+        " no-explicit-any": ["off"]
     }
 }

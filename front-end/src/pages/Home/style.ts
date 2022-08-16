@@ -27,6 +27,11 @@ export const HomeWrapper = styled(Wrapper)`
     font-size: 1.5rem;
     font-weight: 500;
   }
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 `;
 
 export const ModalInput = styled(Input)``;

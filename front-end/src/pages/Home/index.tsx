@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import br from 'date-fns/locale/pt-BR';
+import { ThreeDots } from 'react-loader-spinner';
 import PartyBox from '../../components/PartyBox';
 import useAuth from '../../hooks/useAuth';
 import { PartyInterface, AddressInterface } from '../../interfaces';
@@ -18,12 +19,13 @@ export default function Home() {
   const { token } = useAuth();
   const { setMessage } = useAlert();
   const { openModal, closeModal } = useModal();
-  const [parties, setParties] = useState<PartyInterfaceWithAddress[]>([]);
+  const [parties, setParties] = useState<PartyInterfaceWithAddress[] | null>(null);
   const [partyDate, setPartyDate] = useState<Date | null>(null);
   const [partyName, setPartyName] = useState<string>('');
   const [partyStreet, setPartyStreet] = useState<string>('');
   const [partyCity, setPartyCity] = useState<string>('');
   const [partyState, setPartyState] = useState<string>('');
+  const [loading, setLoading] = useState(false);
   registerLocale('br', br);
 
   async function getParties() {
@@ -33,7 +35,6 @@ export default function Home() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       setParties(response.data);
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao buscar festas' });
@@ -41,13 +42,15 @@ export default function Home() {
   }
 
   async function handleCreateParty() {
+    setLoading(true);
     if (!partyDate || !partyName) {
       setMessage({ type: 'error', text: 'Preencha todos os campos' });
+      setLoading(false);
       return;
     }
 
     try {
-      const response = await api.post('/parties', {
+      await api.post('/parties', {
         name: partyName,
         date: partyDate,
         street: partyStreet,
@@ -58,12 +61,17 @@ export default function Home() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       closeModal();
-      // setMessage({ type: 'success', text: 'Festa adicionada com sucesso' });
+      setPartyName('');
+      setPartyDate(null);
+      setPartyStreet('');
+      setPartyCity('');
+      setPartyState('');
       getParties();
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao adicionar festa' });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -79,6 +87,7 @@ export default function Home() {
           placeholder="Nome"
           value={partyName}
           onChange={(e) => setPartyName(e.target.value)}
+          disabled={loading}
         />
         <DatePicker
           selected={partyDate}
@@ -90,32 +99,45 @@ export default function Home() {
           locale="br"
           className="date-picker"
           placeholderText="Data"
+          disabled={loading}
         />
         <S.ModalInput
           placeholder="Endereço"
           value={partyStreet}
           onChange={(e) => setPartyStreet(e.target.value)}
+          disabled={loading}
         />
         <S.ModalInput
           placeholder="Cidade"
           value={partyCity}
           onChange={(e) => setPartyCity(e.target.value)}
+          disabled={loading}
         />
         <S.ModalInput
           placeholder="Estado"
           value={partyState}
           onChange={(e) => setPartyState(e.target.value)}
+          disabled={loading}
         />
         <div className="buttons">
-          <button type="button" className="white" onClick={closeModal}>
-            Cancelar
+          <button type="button" className="white" onClick={closeModal} disabled={loading}>
+            {
+              loading
+                ? <ThreeDots color="#222244" />
+                : 'Cancelar'
+            }
           </button>
           <button
             type="button"
             className="blue"
             onClick={handleCreateParty}
+            disabled={loading}
           >
-            Confirmar
+            {
+              loading
+                ? <ThreeDots color="#fff" />
+                : 'Confirmar'
+            }
           </button>
         </div>
       </ModalComponent>
@@ -128,9 +150,31 @@ export default function Home() {
           <S.AddButton onClick={openModal}>+</S.AddButton>
         </div>
         {
-          parties?.map((party) => (
-            <PartyBox key={party.id} party={party} />
-          ))
+          parties === null
+            ? (
+              <div
+                className="loading"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  flex: 1,
+                }}
+              >
+                <ThreeDots
+                  color="#fff"
+                />
+              </div>
+            ) : (
+              parties.map((party) => (
+                <PartyBox key={party.id} party={party} />
+              )) || (
+                <h3>
+                  Nenhuma festa cadastrada
+                </h3>
+              )
+            )
         }
       </S.HomeWrapper>
     </>
