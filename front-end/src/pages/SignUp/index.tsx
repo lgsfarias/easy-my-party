@@ -40,16 +40,16 @@ export default function SignUp() {
         confirmPassword,
       });
       setMessage({ type: 'success', text: 'Usuário criado com sucesso!' });
-      setLoading(false);
       navigate('/');
     } catch (error: Error | AxiosError | any) {
-      setLoading(false);
       if (error.response) {
         setMessage({
           type: 'error',
           text: error.response.data.message,
         });
       }
+    } finally {
+      setLoading(false);
     }
   }
 

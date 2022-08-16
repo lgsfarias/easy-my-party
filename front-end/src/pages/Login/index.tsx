@@ -22,6 +22,7 @@ export default function Login() {
 
     if (!email || !password) {
       setMessage({ type: 'error', text: 'Todos os campos são obrigatórios!' });
+      setLoading(false);
       return;
     }
 
@@ -34,16 +35,16 @@ export default function Login() {
       });
       console.log(token);
       login(token);
-      setLoading(false);
       navigate('/home');
     } catch (error: Error | AxiosError | any) {
-      setLoading(false);
       if (error.response) {
         setMessage({
           type: 'error',
           text: error.response.data.message,
         });
       }
+    } finally {
+      setLoading(false);
     }
   }
 
