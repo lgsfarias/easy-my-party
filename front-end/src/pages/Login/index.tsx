@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
-import { flexbox } from '@mui/system';
 import * as S from './style';
 import api from '../../services/api';
 import useAlert from '../../hooks/useAlert';
