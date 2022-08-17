@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import useAuth from '../../hooks/useAuth';
@@ -21,6 +22,7 @@ export default function GuestsPage() {
   const [guestName, setGuestName] = useState<string>('');
   const [guestDependents, setGuestDependents] = useState<string>('');
   const [guestEmail, setGuestEmail] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const totalGuests = guests.reduce((acc, curr) => acc + curr.dependents + 1, 0);
   const totalGuestsConfirmed = guests
@@ -41,8 +43,10 @@ export default function GuestsPage() {
   }
 
   async function handleCreateGuest() {
+    setLoading(true);
     if (!guestName || !guestEmail || !guestDependents) {
       setMessage({ type: 'error', text: 'Preencha todos os campos' });
+      setLoading(false);
       return;
     }
 
@@ -66,6 +70,8 @@ export default function GuestsPage() {
       if (error.response) {
         setMessage({ type: 'error', text: error.response.data.message });
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -86,29 +92,41 @@ export default function GuestsPage() {
           placeholder="Nome"
           value={guestName}
           onChange={(e) => setGuestName(e.target.value)}
+          disabled={loading}
         />
         <S.ModalInput
           type="text"
           placeholder="Numero de Dependentes"
           value={guestDependents}
           onChange={(e) => setGuestDependents(e.target.value)}
+          disabled={loading}
         />
         <S.ModalInput
           type="email"
           placeholder="Email"
           value={guestEmail}
           onChange={(e) => setGuestEmail(e.target.value)}
+          disabled={loading}
         />
         <div className="buttons">
-          <button type="button" className="white" onClick={closeModal}>
-            Cancelar
+          <button type="button" className="white" onClick={closeModal} disabled={loading}>
+            {
+              loading
+                ? <ThreeDots color="#222244" />
+                : 'Cancelar'
+            }
           </button>
           <button
             type="button"
             className="blue"
             onClick={handleCreateGuest}
+            disabled={loading}
           >
-            Confirmar
+            {
+              loading
+                ? <ThreeDots color="#fff" />
+                : 'Confirmar'
+            }
           </button>
         </div>
       </ModalComponent>
