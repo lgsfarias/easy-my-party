@@ -52,7 +52,12 @@ export default function Footer() {
           }}
         />
       </Link>
-      <p>Orçamentos</p>
+      <p
+        onClick={() => navigate(party ? `/party/${party.id}/budget` : '#')}
+      >
+        Orçamentos
+
+      </p>
     </S.Footer>
   );
 }
