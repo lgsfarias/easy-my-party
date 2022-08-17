@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AxiosError } from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import useAuth from '../../hooks/useAuth';
@@ -20,6 +21,7 @@ export default function TasksPage() {
   const { openModal, closeModal } = useModal();
   const { setDonePercentage } = useParty();
   const [tasks, setTasks] = useState<TaskInterface[]>([]);
+  const [loading, setLoading] = useState(false);
   const [taskDescription, setTaskDescription] = useState<string>('');
 
   async function getDonePercentage() {
@@ -50,8 +52,10 @@ export default function TasksPage() {
   }
 
   async function handleCreateTask() {
+    setLoading(true);
     if (!taskDescription) {
       setMessage({ type: 'error', text: 'Preencha todos os campos' });
+      setLoading(false);
       return;
     }
 
@@ -71,6 +75,8 @@ export default function TasksPage() {
       if (error.response) {
         setMessage({ type: 'error', text: error.response.data.message });
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -87,17 +93,27 @@ export default function TasksPage() {
           placeholder="Nome"
           value={taskDescription}
           onChange={(e) => setTaskDescription(e.target.value)}
+          disabled={loading}
         />
         <div className="buttons">
-          <button type="button" className="white" onClick={closeModal}>
-            Cancelar
+          <button type="button" className="white" onClick={closeModal} disabled={loading}>
+            {
+              loading
+                ? <ThreeDots color="#222244" />
+                : 'Cancelar'
+            }
           </button>
           <button
             type="button"
             className="blue"
             onClick={handleCreateTask}
+            disabled={loading}
           >
-            Confirmar
+            {
+              loading
+                ? <ThreeDots color="#fff" />
+                : 'Confirmar'
+            }
           </button>
         </div>
       </ModalComponent>
